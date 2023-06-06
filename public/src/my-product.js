@@ -3,23 +3,26 @@ export class myHeader extends HTMLElement {
   constructor() {
     super();
     this.counter = 0;
+    
+    
   }
   async components() {
     return await (await fetch("src/view/product.html")).text();
   }
 
   selections(e) {
-    console.log(e.target.textContent == "+");
+   
+    console.log(e.target.parentNode.parentNode);
 
     let inputs =
       e.target.nodeName == "BUTTON"
-        ? document.querySelectorAll(`#${e.target.dataset.row} input`)
+        ? e.target.parentNode.parentNode.querySelectorAll(`input`)
         : null;
 
     e.target.textContent === "-"
       ? inputs.forEach((input) =>
           input.name == "amount" && input.value == 0
-            ? document.querySelector(`#${e.target.dataset.row}`).remove()
+            ? e.target.parentNode.parentNode.parentNode.remove()
             : input.name == "amount"
             ? input.value--
             : false
@@ -46,8 +49,8 @@ export class myHeader extends HTMLElement {
     document.adoptedStyleSheets.push(styles);
     this.components().then((html) => {
       this.innerHTML = html;
-      this.container = document.querySelector("#product");
-      this.container.addEventListener("click", this.selections.bind(this));
+      this.container = document.querySelector("#products");
+      this.container.addEventListener("click", this.selections);
     });
   }
 }
