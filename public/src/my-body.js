@@ -13,7 +13,7 @@ export class myHeader extends HTMLElement {
   add() {
     let clon = this.element_products.cloneNode(true);
     this.querySelector("#products").insertAdjacentElement("beforeend", clon);
-    /* this.querySelector('#product').appendChild(clon); */
+    
   }
 
   send() {
@@ -31,16 +31,16 @@ export class myHeader extends HTMLElement {
       if (!result[groupIndex]) {
         result[groupIndex] = [];
       }
-      
+
       result[groupIndex].push([input.name, input.value]);
       return result;
     }, []);
 
-    let list_produc = groupedBody_bill.map((item) =>  Object.fromEntries(item))
+    let list_produc = groupedBody_bill.map((item) => Object.fromEntries(item));
 
     let obj = {
       header: Object.fromEntries(headerValues),
-      body: list_produc
+      body: list_produc,
     };
 
     console.log(obj);

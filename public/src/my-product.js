@@ -11,8 +11,6 @@ export class myHeader extends HTMLElement {
   }
 
   selections(e) {
-   
-    console.log(e.target.parentNode.parentNode);
 
     let inputs =
       e.target.nodeName == "BUTTON"
