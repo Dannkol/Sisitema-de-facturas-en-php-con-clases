@@ -27,10 +27,10 @@ export class myHeader extends HTMLElement {
         )
       : false;
 
-    if (e.target.textContent === "+") {
+    (e.target.textContent === "+")?
       inputs.forEach((input) =>
         input.name == "amount" ? input.value++ : null
-      );
+      ) : false;
 
       /* this.counter++;
       let clonar = document.querySelector(`#${e.target.dataset.row}`);
@@ -40,7 +40,7 @@ export class myHeader extends HTMLElement {
         .querySelectorAll("button")
         .forEach((elemnt) => (elemnt.dataset.row = `product${this.counter}`));
       this.appendChild(clon); */
-    }
+    
   }
 
   connectedCallback() {
