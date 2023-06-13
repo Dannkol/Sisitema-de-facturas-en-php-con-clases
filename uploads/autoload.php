@@ -4,14 +4,18 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
-trait getInstance
-{
+trait getInstance{
     public static $instance;
-    public static function getInstance()
-    {
+    public static function getInstance() {
         $arg = func_get_args();
         $arg = array_pop($arg);
         return (!(self::$instance instanceof self) || !empty($arg)) ? self::$instance = new static(...(array) $arg) : self::$instance;
+    }
+    function __set($name, $value){
+        $this->$name = $value;
+    }
+    function __get($name){
+        return $this->$name;
     }
 }
 
@@ -19,6 +23,7 @@ function autoload($class)
 {
     $classPaths = array(
         dirname(__DIR__).'/class/' . $class . '.php',
+        dirname(__DIR__).'/class/connect/' . $class . '.php',
         dirname(__DIR__).'/api/db/' . $class . '.php',
         dirname(__DIR__).'/api/user/' . $class . '.php',
         dirname(__DIR__).'/api/' . $class . '.php',
