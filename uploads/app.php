@@ -1,7 +1,5 @@
 <?php
 
-
-
 header('Content-Type: application/json; charset=utf-8');
 
 trait getInstance{
@@ -23,7 +21,7 @@ function autoload($class)
 {
     $classPaths = array(
         dirname(__DIR__).'/class/' . $class . '.php',
-        dirname(__DIR__).'/class/connect/' . $class . '.php',
+        dirname(__DIR__).'/class/coneccion/' . $class . '.php',
         dirname(__DIR__).'/api/db/' . $class . '.php',
         dirname(__DIR__).'/api/user/' . $class . '.php',
         dirname(__DIR__).'/api/' . $class . '.php',
@@ -41,8 +39,9 @@ function autoload($class)
 
 spl_autoload_register('autoload');
 
+$obj = new connect("mysql");
 
-class api
+/* class api
 {
     use getInstance;
     public function __construct(private $_METHOD, public $_HEADER, private $_DATA)
@@ -57,3 +56,6 @@ class api
 }
 
 api::getInstance(["_METHOD" => $_SERVER['REQUEST_METHOD'], "_HEADER" => apache_request_headers(), "_DATA" => json_decode(file_get_contents('php://input'), true)]);
+
+
+ */

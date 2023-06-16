@@ -1,7 +1,7 @@
 
 
 CREATE DATABASE db_hunter_facture_DanielManosalva;
-DROP DATABASE db_hunter_DanielManosalva;
+DROP DATABASE db_hunter_facture_DanielManosalva;
 USE db_hunter_facture_DanielManosalva;
 CREATE TABLE tb_bills(
     n_bill INT(11) NOT NULL AUTO_INCREMENT ,
@@ -39,18 +39,12 @@ ALTER TABLE tb_bills
 
 CREATE TABLE tb_sellers(
     id_seller INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nameseller VARCHAR(100) UNIQUE
-);
-
-CREATE TABLE tb_sellers_bills(
-    id_seller INT(11) NOT NULL,
     n_bill INT(11) NOT NULL,
-    PRIMARY KEY (id_seller, n_bill),
-    FOREIGN KEY (n_bill) REFERENCES tb_bills (n_bill),
-    FOREIGN KEY (id_seller) REFERENCES tb_sellers (id_seller)
+    nameseller VARCHAR(100) UNIQUE,
+    CONSTRAINT fk_n_bill
+    FOREIGN KEY (n_bill) REFERENCES tb_bills (n_bill)
 );
 
-DROP TABLE tb_sellers;
 CREATE Table tb_bills_products(
     n_bill INT(11) NOT NULL,
     id_product INT(11) NOT NULL,
@@ -93,7 +87,9 @@ INSERT INTO tb_bills_products(n_bill, id_product) VALUES
     (3, 1);  -- Factura 3, Producto A
 ;
 
-INSERT INTO tb_sellers(nameseller) VALUES ('Juan Smith')('Juan Scot'),('Lucas Jams');
+INSERT INTO tb_sellers(nameseller, n_bill) VALUES ('Juan Smith', 1),('Juan Scot', 3),('Lucas Jams' , 3);
+
+ALTER TABLE tb_sellers AUTO_INCREMENT = 1;
 
 INSERT INTO tb_sellers_bills(id_seller, n_bill) VALUES(1,2),(2,1),(3,3);
 
@@ -109,10 +105,14 @@ SELECT
   (tb_products.amount * tb_products.price) AS total_pagar,
   tb_sellers.nameseller AS vendedor
     FROM tb_bills 
-    JOIN tb_clients ON tb_bills.client_cc = tb_clients.cc
-    JOIN tb_bills_products ON tb_bills.n_bill = tb_bills_products.n_bill
-    JOIN tb_products ON tb_bills_products.id_product = tb_products.id_product
-    JOIN tb_sellers_bills ON tb_bills.n_bill = tb_sellers_bills.n_bill
-    JOIN tb_sellers ON tb_sellers_bills.id_seller = tb_sellers.id_seller 
+    INNER JOIN tb_clients ON tb_bills.client_cc = tb_clients.cc
+    INNER JOIN tb_bills_products ON tb_bills.n_bill = tb_bills_products.n_bill
+    INNER JOIN tb_products ON tb_bills_products.id_product = tb_products.id_product
+    INNER JOIN tb_sellers ON tb_sellers.n_bill = tb_bills.n_bill 
     
     WHERE tb_bills_products.n_bill = 3;
+
+
+SELECT COUNT(*) INTO @CAMPER FROM tb_client;
+
+SELECT @CAMPER
