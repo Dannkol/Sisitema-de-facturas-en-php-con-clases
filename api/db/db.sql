@@ -115,4 +115,4 @@ SELECT
 
 SELECT COUNT(*) INTO @CAMPER FROM tb_client;
 
-SELECT @CAMPER
+SELECT n_bill AS "id", bill_date AS "fecha", fullname AS "cliente" FROM tb_bills INNER JOIN tb_clients ON tb_bills.client_cc = tb_clients.cc

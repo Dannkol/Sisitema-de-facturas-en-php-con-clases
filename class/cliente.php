@@ -4,6 +4,7 @@ class cliente extends connect
     private static $message;
     public static function postClient($data)
     {
+            
         try {
             $query = 'INSERT INTO tb_clients(cc,fullname,email,address,phone) VALUES(:cc,:name,:email,:direction,:cellphone)';
             $res = self::getConnection()->prepare($query);
@@ -72,23 +73,23 @@ class cliente extends connect
             $query = 'UPDATE tb_clients SET';
             $params = [];
     
-            if ($data['Full_Name'] !== null) {
+            if (isset($data['Full_Name'])) {
                 $query .= ' fullname = :fullname,';
                 $params[':fullname'] = $data['Full_Name'];
             }
-            if ($data['Identification'] !== null) {
+            if (isset($data['Identification'])) {
                 $query .= ' cc = :cc,';
                 $params[':cc'] = $data['Identification'];
             }
-            if ($data['Email'] !== null) {
+            if (isset($data['Email'])) {
                 $query .= ' email = :email,';
                 $params[':email'] = $data['Email'];
             }
-            if ($data['Address'] !== null) {
+            if (isset($data['Address'])) {
                 $query .= ' direction = :address,';
                 $params[':address'] = $data['Address'];
             }
-            if ($data['Phone'] !== null) {
+            if (isset($data['Phone'])) {
                 $query .= ' cellphone = :phone,';
                 $params[':phone'] = $data['Phone'];
             }
