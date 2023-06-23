@@ -1,40 +1,22 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+    abstract class connect extends credenciales{
+        use getInstance;
+        
+        protected static $conx;
 
-class connect
-{
-    private $host = 'localhost';
-    private $db_name = 'campersV2';
-    private $username = 'campus';
-    private $password = 'campus2023';
-    private $conn;
-    function __construct()
-    {
-        $this->conn = null;
+        protected static $driver = "mysql";
+        protected static $port = 3306;
 
-        try {
-            $dns = "mysql:host=".$this->host.";dbname=".$this->db_name;
-            $this->conn = new PDO(
-                $dns, $this->username,$this->password
-            );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $exception) {
-            echo "Error de conexión: " . $exception->getMessage();
-        }
+        public static function getConnection(){
+            try {
+                $dns = self::$driver.":host=".self::$host.";port=".self::$port.";dbname=".self::$dbname.";user=".self::$user.";password=".self::$password;
+                self::$conx = new PDO($dns);
+                self::$conx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (\PDOException $e) {
+                throw new Exception('Error de conexión a la base de datos: ' . $e->getMessage());
+            }
 
-        return $this->conn;
-    }
-    public function query($sql, $params = array())
-    {
-        try {
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute($params);
-            return $stmt;
-        } catch (PDOException $exception) {
-            echo "Error en la consulta: " . $exception->getMessage();
-            return null;
+            return self::$conx;
         }
     }
-}

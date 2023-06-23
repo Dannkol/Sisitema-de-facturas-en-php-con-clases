@@ -1,6 +1,7 @@
 <?php
 
-header('Content-Type: application/json; charset=utf-8');
+
+
 
 trait getInstance{
     public static $instance;
@@ -12,9 +13,6 @@ trait getInstance{
     function __set($name, $value){
         $this->$name = $value;
     }
-    function __get($name){
-        return $this->$name;
-    }
 }
 
 function autoload($class)
@@ -25,7 +23,9 @@ function autoload($class)
         dirname(__DIR__).'/api/db/' . $class . '.php',
         dirname(__DIR__).'/api/user/' . $class . '.php',
         dirname(__DIR__).'/api/' . $class . '.php',
+        dirname(__DIR__).'/routes/' . $class . '.php',
         dirname(__DIR__).'/' . $class . '.php',
+
 
     );
 
@@ -39,7 +39,7 @@ function autoload($class)
 
 spl_autoload_register('autoload');
 
-$obj = new connect("mysql");
+
 
 /* class api
 {
